@@ -263,7 +263,6 @@ mod tests {
     use Lua;
     use AnyLuaValue;
     use AnyHashableLuaValue;
-    use AnyLuaString;
 
     #[test]
     fn read_numbers() {
@@ -537,15 +536,16 @@ mod tests {
                 x);
     }
 
-    #[test]
-    fn non_utf_8_string() {
-        let mut lua = Lua::new();
-        let a = lua.execute::<AnyLuaValue>(r"return '\xff\xfe\xff\xfe'").unwrap();
-        match a {
-            AnyLuaValue::LuaAnyString(AnyLuaString(v)) => {
-                assert_eq!(Vec::from(&b"\xff\xfe\xff\xfe"[..]), v);
-            },
-            _ => panic!("Decoded to wrong variant"),
-        }
-    }
+// Note: there is no utf8 handling in Lua 5.1
+//    #[test]
+//    fn non_utf_8_string() {
+//        let mut lua = Lua::new();
+//        let a = lua.execute::<AnyLuaValue>(r"return '\xff\xfe\xff\xfe'").unwrap();
+//        match a {
+//            AnyLuaValue::LuaAnyString(AnyLuaString(v)) => {
+//                assert_eq!(Vec::from(&b"\xff\xfe\xff\xfe"[..]), v);
+//            },
+//            _ => panic!("Decoded to wrong variant"),
+//        }
+//    }
 }

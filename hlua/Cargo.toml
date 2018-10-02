@@ -1,5 +1,5 @@
 [package]
-name = "hlua"
+name = "hlua51"
 version = "0.4.1"
 authors = [ "pierre.krieger1708@gmail.com" ]
 description = "Zero-cost high-level wrapper for Lua"
@@ -10,4 +10,4 @@ license = "MIT"
 
 [dependencies]
 libc = "0.2"
-lua52-sys = { version = "0.1.1", path = "../lua52-sys" }
+lua51-sys = { version = "0.1.1", path = "../lua51-sys" }

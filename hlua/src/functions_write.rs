@@ -536,6 +536,7 @@ mod tests {
         t(|a, b| a + b);
     }
 
+//    TODO: why failing?
     #[test]
     fn closures_extern_access() {
         let mut a = 5;
