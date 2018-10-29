@@ -16,6 +16,9 @@ fn main() {
         build.define("LUA_USE_LINUX", None);
     }
 
+    // enable dynamic modules
+    build.define("LUA_DL_DLOPEN", None);
+
     build
         .file("lua/lapi.c")
         .file("lua/lauxlib.c")
