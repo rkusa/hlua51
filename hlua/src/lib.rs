@@ -735,6 +735,28 @@ impl<'lua> Lua<'lua> {
         LuaRead::lua_read(guard).ok()
     }
 
+    #[inline]
+    pub fn pop<'l, V>(&'l mut self) -> Option<V>
+        where V: LuaRead<PushGuard<&'l mut Lua<'lua>>>
+    {
+        if unsafe { ffi::lua_isnil(self.as_lua().0, -1) } {
+            let raw_lua = self.as_lua();
+            let _guard = PushGuard {
+                lua: self,
+                size: 1,
+                raw_lua: raw_lua,
+            };
+            return None;
+        }
+        let raw_lua = self.as_lua();
+        let guard = PushGuard {
+            lua: self,
+            size: 1,
+            raw_lua: raw_lua,
+        };
+        LuaRead::lua_read(guard).ok()
+    }
+
     /// Reads the value of a global, capturing the context by value.
     #[inline]
     pub fn into_get<V, I>(self, index: I) -> Result<V, PushGuard<Self>>
