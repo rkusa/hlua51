@@ -17,7 +17,9 @@ fn main() {
     }
 
     // enable dynamic modules
-    build.define("LUA_DL_DLOPEN", None);
+    if env::var("CARGO_CFG_TARGET_FAMILY") == Ok("unix".to_string()) {
+        build.define("LUA_DL_DLOPEN", None);
+    }
 
     build
         .file("lua/lapi.c")
