@@ -197,6 +197,7 @@ extern "C" {
     pub fn lua_setfenv(L: *mut lua_State, idx: c_int) -> c_int;
 
     pub fn lua_callk(L: *mut lua_State, nargs: c_int, nresults: c_int, ctx: c_int, k: Option<lua_CFunction>);
+    pub fn lua_call(L: *mut lua_State, nargs: c_int, nresults: c_int);
     pub fn lua_getctx(L: *mut lua_State, ctx: c_int) -> c_int;
     pub fn lua_pcall(L: *mut lua_State, nargs: c_int, nresults: c_int, errfunc: c_int) -> c_int;
     pub fn lua_load(L: *mut lua_State, reader: lua_Reader, dt: *mut libc::c_void, chunkname: *const libc::c_char, mode: *const libc::c_char) -> c_int;
@@ -250,11 +251,6 @@ extern "C" {
 #[inline(always)]
 pub fn lua_upvalueindex(i: c_int) -> c_int {
     LUA_REGISTRYINDEX - i
-}
-
-#[inline(always)]
-pub unsafe fn lua_call(L: *mut lua_State, nargs: c_int, nresults: c_int) {
-    lua_callk(L, nargs, nresults, 0, None)
 }
 
 #[inline(always)]
